@@ -6,7 +6,22 @@
   },
   {
     "name": "Canestrelli",
-    "sound": "sounds/canestrelli.mp3",
+    "sound": "sounds/canestrelli.m4a",
     "icon": "🍪"
+  },
+  {
+    "name": "La brace accesa",
+    "sound": "sounds/labraceaccesa.mp3",
+    "icon": "🔥"
+  },
+  {
+    "name": "Perche' di reno",
+    "sound": "sounds/perchedireno.mp3",
+    "icon": "🦌"
+  },
+  {
+    "name": "Tutto niente",
+    "sound": "sounds/tuttoniente.mp3",
+    "icon": "🤷"
   }
 ]
