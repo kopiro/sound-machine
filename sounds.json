@@ -3,5 +3,10 @@
     "name": "Vai a letto",
     "sound": "sounds/vaialetto.mp3",
     "icon": "🤌"
+  },
+  {
+    "name": "Canestrelli",
+    "sound": "sounds/canestrelli.mp3",
+    "icon": "🍪"
   }
 ]
