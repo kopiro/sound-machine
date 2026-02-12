@@ -23,5 +23,20 @@
     "name": "Tutto niente",
     "sound": "sounds/tuttoniente.mp3",
     "icon": "🤷"
+  },
+  {
+    "name": "All'ubon",
+    "sound": "sounds/allubon.m4a",
+    "icon": "👌"
+  },
+  {
+    "name": "Me",
+    "sound": "sounds/me.m4a",
+    "icon": "🫵"
+  },
+  {
+    "name": "Statti zcitt",
+    "sound": "sounds/stattizcitt.m4a",
+    "icon": "🤫"
   }
 ]
