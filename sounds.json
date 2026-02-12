@@ -38,5 +38,10 @@
     "name": "Statti zcitt",
     "sound": "sounds/stattizcitt.mp3",
     "icon": "🤫"
+  },
+  {
+    "name": "Ci!",
+    "sound": "sounds/ci.mp3",
+    "icon": "😠️"
   }
 ]
