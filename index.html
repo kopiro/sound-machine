@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1a1a2e">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <title>Vai Aletto!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(135deg, #16213e, #0f3460);
+      padding: 16px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    #soundboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      padding: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .sound-btn {
+      position: relative;
+      background: linear-gradient(145deg, #16213e, #1a1a2e);
+      border: 2px solid #0f3460;
+      border-radius: 16px;
+      padding: 20px 12px;
+      color: #e94560;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      min-height: 100px;
+      justify-content: center;
+    }
+
+    .sound-btn:active {
+      transform: scale(0.93);
+      background: linear-gradient(145deg, #0f3460, #16213e);
+      border-color: #e94560;
+      box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+    }
+
+    .sound-btn.playing {
+      border-color: #e94560;
+      box-shadow: 0 0 25px rgba(233, 69, 96, 0.4);
+      animation: pulse 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .sound-btn .icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .sound-btn .label {
+      font-size: 0.8rem;
+      text-align: center;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    #empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      opacity: 0.5;
+    }
+
+    #empty-state p {
+      font-size: 1rem;
+      margin-top: 12px;
+    }
+
+    /* Ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(233, 69, 96, 0.4);
+      transform: scale(0);
+      animation: ripple-anim 0.5s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-anim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Install banner */
+    #install-banner {
+      display: none;
+      background: #0f3460;
+      padding: 12px 20px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e94560;
+    }
+
+    #install-banner:hover {
+      background: #16213e;
+    }
+
+    @media (min-width: 500px) {
+      #soundboard {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="install-banner" onclick="installApp()">
+    Tap to install this bad boy on your home screen
+  </div>
+
+  <header>
+    <h1>Vai Aletto!</h1>
+    <p>tap. laugh. repeat.</p>
+  </header>
+
+  <div id="soundboard"></div>
+  <div id="empty-state" style="display:none;">
+    <p>No sounds loaded.<br>Add a <code>sounds.json</code> file.</p>
+  </div>
+
+  <script>
+    // --- Audio engine (handles mobile quirks) ---
+    const audioCache = {};
+
+    function playSound(src) {
+      // Stop any currently playing instance of this sound and replay
+      if (audioCache[src]) {
+        audioCache[src].currentTime = 0;
+        audioCache[src].play();
+        return audioCache[src];
+      }
+      const audio = new Audio(src);
+      audioCache[src] = audio;
+      audio.play();
+      return audio;
+    }
+
+    // Unlock audio on iOS (requires user gesture)
+    function unlockAudio() {
+      const silent = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');
+      silent.play().catch(() => {});
+      document.removeEventListener('touchstart', unlockAudio);
+      document.removeEventListener('click', unlockAudio);
+    }
+    document.addEventListener('touchstart', unlockAudio, { once: true });
+    document.addEventListener('click', unlockAudio, { once: true });
+
+    // --- Render soundboard ---
+    async function loadSounds() {
+      try {
+        const res = await fetch('sounds.json');
+        if (!res.ok) throw new Error('No sounds.json');
+        const sounds = await res.json();
+        renderButtons(sounds);
+      } catch (e) {
+        document.getElementById('empty-state').style.display = 'block';
+        console.warn('Could not load sounds.json:', e);
+      }
+    }
+
+    // Some fun random icons for buttons that don't specify one
+    const defaultIcons = ['💥', '🔊', '🎵', '🤡', '😂', '🫠', '💀', '🤌', '🍕', '🎺', '📢', '👀', '🦆', '🐸', '🎤', '👁️'];
+
+    function renderButtons(sounds) {
+      const board = document.getElementById('soundboard');
+      if (!sounds.length) {
+        document.getElementById('empty-state').style.display = 'block';
+        return;
+      }
+
+      sounds.forEach((s, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'sound-btn';
+        const icon = s.icon || defaultIcons[i % defaultIcons.length];
+        btn.innerHTML = `<span class="icon">${icon}</span><span class="label">${s.name}</span>`;
+
+        btn.addEventListener('click', (e) => {
+          // Ripple
+          const ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          const rect = btn.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+          ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+          btn.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 500);
+
+          // Play
+          btn.classList.add('playing');
+          const audio = playSound(s.sound);
+          audio.onended = () => btn.classList.remove('playing');
+          setTimeout(() => btn.classList.remove('playing'), 2000);
+        });
+
+        board.appendChild(btn);
+      });
+    }
+
+    loadSounds();
+
+    // --- PWA install prompt ---
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('install-banner').style.display = 'block';
+    });
+
+    function installApp() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        document.getElementById('install-banner').style.display = 'none';
+      });
+    }
+
+    // --- Register service worker ---
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
