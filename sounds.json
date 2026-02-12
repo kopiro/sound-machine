@@ -6,7 +6,7 @@
   },
   {
     "name": "Canestrelli",
-    "sound": "sounds/canestrelli.m4a",
+    "sound": "sounds/canestrelli.mp3",
     "icon": "🍪"
   },
   {
@@ -26,17 +26,17 @@
   },
   {
     "name": "All'ubon",
-    "sound": "sounds/allubon.m4a",
+    "sound": "sounds/allubon.mp3",
     "icon": "👌"
   },
   {
     "name": "Me",
-    "sound": "sounds/me.m4a",
+    "sound": "sounds/me.mp3",
     "icon": "🫵"
   },
   {
     "name": "Statti zcitt",
-    "sound": "sounds/stattizcitt.m4a",
+    "sound": "sounds/stattizcitt.mp3",
     "icon": "🤫"
   }
 ]

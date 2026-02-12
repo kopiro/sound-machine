@@ -2,7 +2,7 @@
   "name": "Vai Aletto!",
   "short_name": "Vai Aletto!",
   "description": "The soundboard you didn't know you needed",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#1a1a2e",

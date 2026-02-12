@@ -1,10 +1,10 @@
-const CACHE_NAME = 'vaialetto-v1';
+const CACHE_NAME = 'vaialetto-v2';
 
 const PRECACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/sounds.json',
+  './',
+  './index.html',
+  './manifest.json',
+  './sounds.json',
 ];
 
 self.addEventListener('install', (e) => {
