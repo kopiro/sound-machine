@@ -43,5 +43,10 @@
     "name": "Ci!",
     "sound": "sounds/ci.mp3",
     "icon": "😠️"
+  },
+  {
+    "name": "Ambress Ambress",
+    "sound": "sounds/ambressambress.mp3",
+    "icon": "🏃🏻️"
   }
 ]

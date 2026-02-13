@@ -153,6 +153,255 @@
       background: #16213e;
     }
 
+    /* Sequence mode */
+    .sound-btn.queued {
+      border-color: #e94560;
+      box-shadow: 0 0 15px rgba(233, 69, 96, 0.25);
+    }
+
+    .sound-btn .badge {
+      display: none;
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: #e94560;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      line-height: 22px;
+      text-align: center;
+    }
+
+    .sound-btn.queued .badge {
+      display: block;
+    }
+
+    #seq-toggle {
+      background: none;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: #eee;
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: all 0.15s ease;
+    }
+
+    #seq-toggle.active {
+      border-color: #e94560;
+      color: #e94560;
+    }
+
+    /* Sequence bar & timeline */
+    #sequence-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #16213e, #0f3460);
+      padding: 0;
+      padding-bottom: env(safe-area-inset-bottom);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+      z-index: 20;
+      flex-direction: column;
+    }
+
+    #sequence-bar.visible {
+      display: flex;
+    }
+
+    /* Timeline track */
+    #timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 12px;
+      min-height: 62px;
+      scrollbar-width: none;
+    }
+
+    #timeline::-webkit-scrollbar {
+      display: none;
+    }
+
+    #timeline-empty {
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+      width: 100%;
+      text-align: center;
+    }
+
+    .tl-clip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(233, 69, 96, 0.15);
+      border: 1.5px solid rgba(233, 69, 96, 0.4);
+      border-radius: 8px;
+      padding: 6px 12px 6px 8px;
+      flex-shrink: 0;
+      position: relative;
+      transition: all 0.15s ease;
+      touch-action: none;
+      min-width: 40px;
+    }
+
+    .tl-clip.dragging {
+      opacity: 0.8;
+      transform: scale(1.12);
+      z-index: 10;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      transition: none;
+    }
+
+    .tl-clip.active {
+      background: rgba(233, 69, 96, 0.35);
+      border-color: #e94560;
+      box-shadow: 0 0 12px rgba(233, 69, 96, 0.4);
+    }
+
+    .tl-clip.silence {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      border-style: dashed;
+    }
+
+    .tl-clip.silence.active {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .tl-clip-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .tl-clip-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #eee;
+      max-width: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tl-clip-remove {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 0 2px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .tl-clip-remove:active {
+      color: #e94560;
+    }
+
+    .tl-clip-resize {
+      position: absolute;
+      right: -1px;
+      top: 0;
+      bottom: 0;
+      width: 10px;
+      cursor: ew-resize;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+    }
+
+    .tl-clip-resize::after {
+      content: '';
+      width: 2px;
+      height: 14px;
+      background: rgba(233, 69, 96, 0.4);
+      border-radius: 1px;
+    }
+
+    .tl-clip:hover .tl-clip-resize::after,
+    .tl-clip-resize:active::after {
+      background: rgba(233, 69, 96, 0.8);
+    }
+
+    .tl-clip-rate {
+      font-size: 0.5rem;
+      color: rgba(255, 255, 255, 0.45);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tl-connector {
+      width: 12px;
+      height: 2px;
+      background: rgba(233, 69, 96, 0.3);
+      flex-shrink: 0;
+    }
+
+    /* Controls row */
+    #seq-controls {
+      display: flex;
+      gap: 8px;
+      padding: 0 12px 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #seq-controls button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    #seq-controls button:active {
+      transform: scale(0.95);
+    }
+
+    #seq-play {
+      background: #e94560;
+      color: #fff;
+      flex: 1;
+      max-width: 160px;
+    }
+
+    #seq-play:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    #seq-clear {
+      background: rgba(255, 255, 255, 0.1);
+      color: #eee;
+    }
+
+    #seq-silence {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.5);
+      border: 1.5px dashed rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+    }
+
+    body.sequence-mode #soundboard {
+      padding-bottom: 140px;
+    }
+
     @media (min-width: 500px) {
       #soundboard {
         grid-template-columns: repeat(3, 1fr);
@@ -168,11 +417,23 @@
   <header>
     <h1>Vai Aletto!</h1>
     <p>tap. laugh. repeat.</p>
+    <button id="seq-toggle" onclick="toggleSequenceMode()">sequence mode</button>
   </header>
 
   <div id="soundboard"></div>
   <div id="empty-state" style="display:none;">
     <p>No sounds loaded.<br>Add a <code>sounds.json</code> file.</p>
+  </div>
+
+  <div id="sequence-bar">
+    <div id="timeline">
+      <span id="timeline-empty">tap sounds to build a sequence</span>
+    </div>
+    <div id="seq-controls">
+      <button id="seq-silence" onclick="addSilence()">+ 1s</button>
+      <button id="seq-clear" onclick="clearSequence()">clear</button>
+      <button id="seq-play" onclick="playSequence()" disabled>play</button>
+    </div>
   </div>
 
   <script>
@@ -183,6 +444,7 @@
       // Stop any currently playing instance of this sound and replay
       if (audioCache[src]) {
         audioCache[src].currentTime = 0;
+        audioCache[src].playbackRate = 1;
         audioCache[src].play();
         return audioCache[src];
       }
@@ -201,6 +463,298 @@
     }
     document.addEventListener('touchstart', unlockAudio, { once: true });
     document.addEventListener('click', unlockAudio, { once: true });
+
+    // --- Sequence mode ---
+    let sequenceMode = false;
+    // Each entry: { type: 'sound', src, btn, icon, name } or { type: 'silence' }
+    let sequence = [];
+    let sequencePlaying = false;
+
+    function toggleSequenceMode() {
+      sequenceMode = !sequenceMode;
+      const toggle = document.getElementById('seq-toggle');
+      const bar = document.getElementById('sequence-bar');
+      toggle.classList.toggle('active', sequenceMode);
+      bar.classList.toggle('visible', sequenceMode);
+      document.body.classList.toggle('sequence-mode', sequenceMode);
+      if (!sequenceMode) clearSequence();
+    }
+
+    const CLIP_BASE_WIDTH = 80;
+
+    function addToSequence(src, btn, icon, name) {
+      sequence.push({ type: 'sound', src, btn, icon, name, rate: 1 });
+      renderTimeline();
+      updateBadges();
+    }
+
+    function addSilence() {
+      sequence.push({ type: 'silence', rate: 1 });
+      renderTimeline();
+    }
+
+    function removeFromSequence(index) {
+      sequence.splice(index, 1);
+      renderTimeline();
+      updateBadges();
+    }
+
+    function updateBadges() {
+      document.querySelectorAll('.sound-btn').forEach(b => {
+        b.classList.remove('queued');
+        b.querySelector('.badge').textContent = '';
+      });
+      let counter = 0;
+      sequence.forEach(item => {
+        if (item.type === 'sound') {
+          counter++;
+          item.btn.classList.add('queued');
+          item.btn.querySelector('.badge').textContent = counter;
+        }
+      });
+    }
+
+    function renderTimeline() {
+      const tl = document.getElementById('timeline');
+      tl.innerHTML = '';
+
+      if (sequence.length === 0) {
+        tl.innerHTML = '<span id="timeline-empty">tap sounds to build a sequence</span>';
+        document.getElementById('seq-play').disabled = true;
+        return;
+      }
+
+      document.getElementById('seq-play').disabled = false;
+
+      sequence.forEach((item, i) => {
+        if (i > 0) {
+          const conn = document.createElement('div');
+          conn.className = 'tl-connector';
+          tl.appendChild(conn);
+        }
+
+        const rate = item.rate || 1;
+        const clip = document.createElement('div');
+        clip.className = 'tl-clip' + (item.type === 'silence' ? ' silence' : '');
+        clip.dataset.index = i;
+        clip.style.width = (CLIP_BASE_WIDTH / rate) + 'px';
+
+        const rateLabel = rate !== 1 ? `<span class="tl-clip-rate">${rate.toFixed(1)}x</span>` : '';
+
+        if (item.type === 'silence') {
+          const dur = (1 / rate).toFixed(1);
+          clip.innerHTML = `
+            <span class="tl-clip-icon">...</span>
+            <span class="tl-clip-label">${dur}s</span>
+            ${rateLabel}
+            <button class="tl-clip-remove" onclick="removeFromSequence(${i})">x</button>
+            <div class="tl-clip-resize"></div>
+          `;
+        } else {
+          clip.innerHTML = `
+            <span class="tl-clip-icon">${item.icon}</span>
+            <span class="tl-clip-label">${item.name}</span>
+            ${rateLabel}
+            <button class="tl-clip-remove" onclick="removeFromSequence(${i})">x</button>
+            <div class="tl-clip-resize"></div>
+          `;
+        }
+
+        tl.appendChild(clip);
+      });
+
+      // Auto-scroll to the end
+      tl.scrollLeft = tl.scrollWidth;
+    }
+
+    function clearSequence() {
+      sequence = [];
+      renderTimeline();
+      updateBadges();
+    }
+
+    async function playSequence() {
+      if (sequencePlaying || sequence.length === 0) return;
+      sequencePlaying = true;
+      const playBtn = document.getElementById('seq-play');
+      playBtn.disabled = true;
+      playBtn.textContent = '...';
+
+      const clips = document.querySelectorAll('.tl-clip');
+
+      for (let i = 0; i < sequence.length; i++) {
+        const item = sequence[i];
+        const clip = clips[i];
+        if (clip) clip.classList.add('active');
+
+        if (item.type === 'silence') {
+          await new Promise(r => setTimeout(r, 1000 / (item.rate || 1)));
+        } else {
+          item.btn.classList.add('playing');
+          const audio = playSound(item.src);
+          audio.playbackRate = item.rate || 1;
+          await new Promise(resolve => {
+            audio.onended = resolve;
+            setTimeout(resolve, 10000);
+          });
+          item.btn.classList.remove('playing');
+        }
+
+        if (clip) clip.classList.remove('active');
+      }
+
+      playBtn.textContent = 'play';
+      playBtn.disabled = false;
+      sequencePlaying = false;
+    }
+
+    // --- Timeline clip resize (drag handle to change playback rate) ---
+    let resize = null;
+
+    document.getElementById('timeline').addEventListener('pointerdown', (e) => {
+      const handle = e.target.closest('.tl-clip-resize');
+      if (!handle || sequencePlaying) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const clip = handle.closest('.tl-clip');
+      const index = parseInt(clip.dataset.index);
+      const startX = e.clientX;
+      const startRate = sequence[index].rate || 1;
+      const startWidth = CLIP_BASE_WIDTH / startRate;
+
+      clip.setPointerCapture(e.pointerId);
+      resize = { index, startX, startWidth, startRate, clip, pointerId: e.pointerId };
+    }, true);
+
+    document.getElementById('timeline').addEventListener('pointermove', (e) => {
+      if (!resize) return;
+      e.preventDefault();
+      e.stopPropagation();
+
+      const delta = e.clientX - resize.startX;
+      const newWidth = Math.max(CLIP_BASE_WIDTH / 2, Math.min(CLIP_BASE_WIDTH * 2, resize.startWidth + delta));
+      const newRate = Math.round((CLIP_BASE_WIDTH / newWidth) * 20) / 20; // snap to 0.05 increments
+      const clampedRate = Math.max(0.5, Math.min(2, newRate));
+
+      sequence[resize.index].rate = clampedRate;
+      resize.clip.style.width = (CLIP_BASE_WIDTH / clampedRate) + 'px';
+
+      // Update rate label
+      const rateEl = resize.clip.querySelector('.tl-clip-rate');
+      if (clampedRate !== 1) {
+        if (rateEl) {
+          rateEl.textContent = clampedRate.toFixed(1) + 'x';
+        } else {
+          const span = document.createElement('span');
+          span.className = 'tl-clip-rate';
+          span.textContent = clampedRate.toFixed(1) + 'x';
+          resize.clip.querySelector('.tl-clip-label').after(span);
+        }
+      } else if (rateEl) {
+        rateEl.remove();
+      }
+
+      // Update silence duration label
+      if (sequence[resize.index].type === 'silence') {
+        const label = resize.clip.querySelector('.tl-clip-label');
+        if (label) label.textContent = (1 / clampedRate).toFixed(1) + 's';
+      }
+    }, true);
+
+    document.getElementById('timeline').addEventListener('pointerup', (e) => {
+      if (!resize) return;
+      resize = null;
+    }, true);
+
+    document.getElementById('timeline').addEventListener('pointercancel', (e) => {
+      if (!resize) return;
+      resize = null;
+    }, true);
+
+    // --- Timeline drag reorder (long-press to grab, drag to move) ---
+    let drag = null;
+
+    document.getElementById('timeline').addEventListener('pointerdown', (e) => {
+      const clip = e.target.closest('.tl-clip');
+      if (!clip || e.target.closest('.tl-clip-remove') || e.target.closest('.tl-clip-resize') || sequencePlaying) return;
+
+      const index = parseInt(clip.dataset.index);
+      const startX = e.clientX;
+      const startY = e.clientY;
+
+      const holdTimer = setTimeout(() => {
+        // Enter drag mode
+        drag.active = true;
+        clip.classList.add('dragging');
+        clip.setPointerCapture(e.pointerId);
+      }, 200);
+
+      drag = { index, startX, startY, holdTimer, active: false, pointerId: e.pointerId, clip };
+    });
+
+    document.getElementById('timeline').addEventListener('pointermove', (e) => {
+      if (!drag) return;
+
+      if (!drag.active) {
+        // If moved too far before hold completes, cancel
+        const dx = Math.abs(e.clientX - drag.startX);
+        const dy = Math.abs(e.clientY - drag.startY);
+        if (dx > 8 || dy > 8) {
+          clearTimeout(drag.holdTimer);
+          drag = null;
+        }
+        return;
+      }
+
+      e.preventDefault();
+
+      // Find which clip position we're over
+      const clips = Array.from(document.querySelectorAll('.tl-clip'));
+      let targetIndex = drag.index;
+
+      for (let i = 0; i < clips.length; i++) {
+        const rect = clips[i].getBoundingClientRect();
+        const midX = rect.left + rect.width / 2;
+        if (e.clientX < midX) {
+          targetIndex = i;
+          break;
+        }
+        if (i === clips.length - 1) targetIndex = clips.length - 1;
+      }
+
+      if (targetIndex !== drag.index) {
+        const [item] = sequence.splice(drag.index, 1);
+        sequence.splice(targetIndex, 0, item);
+        drag.index = targetIndex;
+        renderTimeline();
+        // Re-grab the new DOM element
+        const newClips = document.querySelectorAll('.tl-clip');
+        drag.clip = newClips[targetIndex];
+        if (drag.clip) {
+          drag.clip.classList.add('dragging');
+          drag.clip.setPointerCapture(drag.pointerId);
+        }
+      }
+    });
+
+    document.getElementById('timeline').addEventListener('pointerup', () => {
+      if (!drag) return;
+      clearTimeout(drag.holdTimer);
+      if (drag.active) {
+        drag.clip.classList.remove('dragging');
+        updateBadges();
+      }
+      drag = null;
+    });
+
+    document.getElementById('timeline').addEventListener('pointercancel', () => {
+      if (!drag) return;
+      clearTimeout(drag.holdTimer);
+      if (drag.active) drag.clip.classList.remove('dragging');
+      drag = null;
+    });
 
     // --- Render soundboard ---
     async function loadSounds() {
@@ -229,7 +783,7 @@
         const btn = document.createElement('button');
         btn.className = 'sound-btn';
         const icon = s.icon || defaultIcons[i % defaultIcons.length];
-        btn.innerHTML = `<span class="icon">${icon}</span><span class="label">${s.name}</span>`;
+        btn.innerHTML = `<span class="badge"></span><span class="icon">${icon}</span><span class="label">${s.name}</span>`;
 
         btn.addEventListener('click', (e) => {
           // Ripple
@@ -242,6 +796,11 @@
           ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
           btn.appendChild(ripple);
           setTimeout(() => ripple.remove(), 500);
+
+          if (sequenceMode) {
+            addToSequence(s.sound, btn, icon, s.name);
+            return;
+          }
 
           // Play
           btn.classList.add('playing');
